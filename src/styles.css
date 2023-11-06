@@ -1,0 +1,34 @@
+*,
+*::after,
+*::before {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+body {
+    padding: 2rem;
+}
+
+#root {
+    display: flex;
+    justify-content: center;
+}
+
+div[data-lastpass-icon-root] {
+    display: none;
+}
+
+.form-label {
+    margin: 0;
+}
+
+.card-header {
+    display: flex;
+    justify-content: center;
+}
+
+/* Question: Why do i get  ResizeObserver loop completed with undelivered notifications   when i go to /game */
+iframe#webpack-dev-server-client-overlay {
+    display: none !important
+}

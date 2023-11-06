@@ -1,0 +1,12 @@
+.game-wrapper {
+    width: 50rem;
+
+    .number-guess {
+        display: flex;
+        justify-content: center;
+        font-size: 3rem;
+        background-color: brown;
+        margin-bottom: 1rem;
+        color: white;
+    }
+}
