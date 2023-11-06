@@ -1,40 +1,33 @@
-import React, { useState, useEffect, useRef, useContext, useMemo } from "react";
+import React, { useState, useEffect, useRef, useContext, useMemo, useDeferredValue } from "react";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../Context/UserContext";
 
 import "./game.scss";
 
-const defaultRangeInputValues = {
-  minRandomNumber: 1000,
-  maxRandomNumber: 9999,
-};
-
-const randomNumber = (calculateNewNumbersSum) => {
+const randomNumber = (bet) => {
   for (let i = 0; i < 1000000000; i++) {}
-  console.log("here again");
 
-  const number =
-    Math.floor(
-      Math.random() *
-        (calculateNewNumbersSum * 1000 - calculateNewNumbersSum + 1)
-    ) + calculateNewNumbersSum;
+  const number = bet * 1000;
   console.log(number);
   return number;
 };
 
 export default function Game() {
   const [bet, setBet] = useState(1);
+  const deferredBet = useDeferredValue(bet)
   const [numberInput, setNumberInput] = useState("");
   const [hasGuessed, setHasGuessed] = useState(false);
   const [turnsLeft, setTurnsLeft] = useState(3);
-  const numberToGuess = useMemo(() => randomNumber(bet), [bet]);
+  const numberToGuess = useMemo(() => randomNumber(deferredBet), [deferredBet]);
 
   const { user, increaseBalance, decreaseBalance } = useContext(UserContext);
   const navigate = useNavigate();
 
   const congratulationsRef = useRef(null);
 
+
   const noMoreMoney = user.balance === 0;
+  const gameOver = turnsLeft === 0 || hasGuessed || noMoreMoney;
 
   useEffect(() => {
     if (!congratulationsRef.current) {
@@ -48,7 +41,7 @@ export default function Game() {
     if (hasGuessed) {
       h1.textContent = "Congratulations. You win 1000$";
     }
-  }, [hasGuessed, turnsLeft]);
+  }, [hasGuessed, turnsLeft, numberToGuess]);
 
   const handleCheckGuess = () => {
     if (Number(numberInput) === numberToGuess) {
@@ -64,7 +57,7 @@ export default function Game() {
 
   const handleTryAgain = () => {
     setHasGuessed(false);
-    setCalculateNewNumbersSum(calculateNewNumbersSum + 1);
+    setBet(1);
     setTurnsLeft(3);
     setNumberInput("");
   };
@@ -81,14 +74,22 @@ export default function Game() {
     setBet(bet - 1);
   };
 
+  const redirectToProfile = () => {
+    navigate(`/profile/${user.userID}`)
+  }
+
   return (
     <div className="game-wrapper">
       <div className="d-flex flex-wrap gap-sm-3 justify-content-center mb-3">
         <h1>Welcome {user.username}</h1>
-        <button onClick={exitGame} className="btn btn-md btn-secondary">
-          Exit the game
+        <button onClick={redirectToProfile} className="btn btn-md btn-dark">
+          Go to profile
         </button>
       </div>
+
+      <button onClick={exitGame} className="btn btn-md btn-secondary">
+        Exit the game
+      </button>
 
       <hr />
       <div className="d-flex justify-content-between">
@@ -104,10 +105,10 @@ export default function Game() {
           value={numberInput}
           type="number"
           className="form-control"
-          readOnly={turnsLeft === 0 || hasGuessed}
+          readOnly={gameOver}
         />
         <button
-          disabled={turnsLeft === 0 || hasGuessed || noMoreMoney}
+          disabled={gameOver}
           onClick={handleCheckGuess}
           className="btn btn-primary"
         >
@@ -119,6 +120,15 @@ export default function Game() {
         {String(numberToGuess).substring(0, String(numberToGuess).length - 1) +
           "X"}
       </div>
+
+      <input
+          onChange={(e) => {
+            setBet(e.target.value);
+          }}
+          value={bet}
+          type="number"
+          className="form-control"
+        />
 
       {(hasGuessed || turnsLeft === 0) && (
         <div
@@ -132,19 +142,22 @@ export default function Game() {
         </div>
       )}
 
-      <div className="row g-2">
-        <div className="col-sm-5">
-          <button onClick={increaseBet} className="btn btn-success w-100">
-            Im feeling lucky
-          </button>
-        </div>
-        <div className="col-sm-2"></div>
-        <div className="col-sm-5">
-          <button onClick={decreaseBet} className="btn btn-warning w-100">
-            Im scared for my life
-          </button>
-        </div>
-      </div>
+      {!gameOver &&
+            <div className="row g-2">
+            <div className="col-sm-5">
+              <button onClick={increaseBet} className="btn btn-success w-100">
+                Im feeling lucky
+              </button>
+            </div>
+            <div className="col-sm-2"></div>
+            <div className="col-sm-5">
+              <button onClick={decreaseBet} className="btn btn-warning w-100">
+                Im scared for my life
+              </button>
+            </div>
+          </div>
+      }
+
     </div>
   );
 }

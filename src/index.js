@@ -6,6 +6,8 @@ import { UserContextProvider } from "./Context/UserContext.jsx";
 import Home from "./Home/Home.jsx";
 import Game from "./Game/Game.jsx";
 import Register from "./Register/Register.jsx";
+import Profile from "./Profile/Profile.jsx";
+import Users from "./Users/Users.jsx";
 
 import "bootstrap/dist/css/bootstrap.css";
 import "./styles.css";
@@ -19,6 +21,8 @@ root.render(
           <Route path={"/"} element={<Home />} />
           <Route path={"/game"} element={<Game />} />
           <Route path={"/register"} element={<Register />} />
+          <Route path={"/profile/:userID"} element={<Profile />} />
+          <Route path={"/users"} element={<Users />} />
         </Routes>
       </BrowserRouter>
     </UserContextProvider>

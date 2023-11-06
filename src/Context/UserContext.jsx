@@ -17,12 +17,6 @@ export const UserContextProvider = ({ children }) => {
         },
       });
     },
-    changeUsername: (username) => {
-      userDispatch({
-        type: "change_username",
-        payload: { username: username },
-      });
-    },
     decreaseBalance: (sum) => {
       userDispatch({
         type: "decrease_balance",
@@ -33,6 +27,12 @@ export const UserContextProvider = ({ children }) => {
       userDispatch({
         type: "increase_balance",
         payload: { sum: sum },
+      });
+    },
+    setBalance: (balance) => {
+      userDispatch({
+        type: "set_balance",
+        payload: { balance: balance },
       });
     },
   };
@@ -54,11 +54,6 @@ function userReducer(state, action) {
         username: payload.username,
         balance: payload.balance,
       };
-    case "change_username":
-      return {
-        ...state,
-        username: payload.username,
-      };
     case "decrease_balance":
       return {
         ...state,
@@ -69,6 +64,11 @@ function userReducer(state, action) {
         ...state,
         balance: state.balance + payload.sum,
       };
+      case "set_balance":
+        return {
+          ...state,
+          balance: payload.balance,
+        };
     default:
       return state;
   }

@@ -86,6 +86,8 @@ export default function Home() {
           register now
         </Link>
       </div>
+
+      <Link className="mt-3 btn btn-info w-100" to={'/users'}>Check users</Link>
     </div>
   );
 }

@@ -41,3 +41,18 @@ export async function addUser(username, password) {
   users.push(newUser);
   return newUser;
 }
+
+export async function addMoneyToUserAccount(userID, moneyToAdd) {
+  await sleep(2000);
+
+  const user = users.find(x => x.userID === userID);
+  user.balance = user.balance + moneyToAdd;
+  return user.balance;
+}
+
+export async function getUsers(query) {
+  await sleep(2000);
+
+  const filtedUsers = users.filter(x => x.username.startsWith(query));
+  return filtedUsers ?? [];
+}
