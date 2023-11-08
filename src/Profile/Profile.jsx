@@ -33,6 +33,10 @@ export default function Profile() {
         navigate("/game");
     }
 
+    const withdrawMoney = () => {
+        navigate("/withdraw-money");
+    }
+
     if (loading) {
         return <h1 className='d-flex justify-content-center'>LOADING...</h1>
     }
@@ -44,17 +48,21 @@ export default function Profile() {
                 <h3 className="card-header">{user.username}</h3>
                 <div className="card-body">
                     <div>Your current balance is {user.balance}$</div>
+                    <button onClick={withdrawMoney} className="btn btn-primary mb-5 w-100">Withdraw money</button>
                     <form onSubmit={addMoneyToAccount}>
-                        <input
-                        onChange={(e) =>
-                            setMoneyToAdd(e.target.value )
-                        }
-                        value={moneyToAdd}
-                        className="form-control"
-                        id="moneyToAdd"
-                        disabled={submitting}
-                        required
-                    />
+                        <label htmlFor='moneyToAdd'>
+                            Add money to account
+                            <input
+                            onChange={(e) =>
+                                setMoneyToAdd(e.target.value )
+                            }
+                            value={moneyToAdd}
+                            className="form-control"
+                            id="moneyToAdd"
+                            disabled={submitting}
+                            required
+                        />
+                        </label>
                         <button className='btn btn-success mt-2 w-100'>Add money and go back to the game</button>
                     </form>
                 </div>

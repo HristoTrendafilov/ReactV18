@@ -27,8 +27,3 @@ div[data-lastpass-icon-root] {
     display: flex;
     justify-content: center;
 }
-
-/* Question: Why do i get  ResizeObserver loop completed with undelivered notifications   when i go to /game */
-iframe#webpack-dev-server-client-overlay {
-    display: none !important
-}
