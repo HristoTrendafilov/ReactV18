@@ -10,6 +10,7 @@ import Register from "./Register/Register.jsx";
 import Profile from "./Profile/Profile.jsx";
 import Users from "./Users/Users.jsx";
 import WidthdrawMoney from "./Profile/WithdrawMoney.jsx";
+import Sandbox from "./Sandbox/Sandbox.jsx";
 
 import "bootstrap/dist/css/bootstrap.css";
 import "./styles.css";
@@ -27,6 +28,7 @@ root.render(
             <Route path={"/profile/:userID"} element={<Profile />} />
             <Route path={"/users"} element={<Users />} />
             <Route path={"/withdraw-money"} element={<WidthdrawMoney />} />
+            <Route path={"/sandbox"} element={<Sandbox/>} />
           </Routes>
           </ErrorBoundary>
         </BrowserRouter>

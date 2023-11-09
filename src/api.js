@@ -56,3 +56,9 @@ export async function getUsers(query) {
   const filtedUsers = users.filter(x => x.username.startsWith(query));
   return filtedUsers ?? [];
 }
+
+export async function getAllUsers(query) {
+  await sleep(2000);
+
+  return users;
+}

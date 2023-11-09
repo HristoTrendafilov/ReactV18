@@ -88,6 +88,7 @@ export default function Home() {
       </div>
 
       <Link className="mt-3 btn btn-info w-100" to={'/users'}>Check users</Link>
+      <Link className="mt-3 btn btn-warning w-100" to={'/sandbox'}>Go to the sandbox</Link>
     </div>
   );
 }

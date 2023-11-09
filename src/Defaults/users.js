@@ -17,4 +17,10 @@ export const users = [
     password: "123",
     balance: 30,
   },
+  {
+    userID: 4,
+    username: "Vladi",
+    password: "123",
+    balance: 100,
+  },
 ];
